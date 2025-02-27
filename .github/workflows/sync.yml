@@ -1,0 +1,27 @@
+name: Sync Upstream
+on:
+  schedule:
+    # 每天 UTC 时间 00:00 触发（北京时间 08:00）
+    - cron: "0 0 * * *"
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 必须授予写入权限
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 添加上游仓库
+        run: |
+          git remote add upstream https://github.com/FongMi/CatVodSpider.git
+          git fetch upstream
+
+      - name: 合并上游分支
+        run: |
+          git checkout main  # 切换到你的主分支（如 main 或 master）
+          git merge upstream/main  # 合并上游分支
+          git push origin main  # 推送更新

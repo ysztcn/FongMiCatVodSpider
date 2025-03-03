@@ -20,10 +20,13 @@ jobs:
       - name: 添加上游仓库
         run: |
           git remote add upstream https://github.com/FongMi/CatVodSpider.git
-          git fetch upstream main
+          git fetch upstream
 
       - name: 合并上游分支
         run: |
           git checkout main
-          git merge upstream/main --no-edit  # 自动接受合并提交信息
+          git pull upstream main --no-edit  # 自动接受合并提交信息
+
+      - name: 推送更改到 origin
+        run: |
           git push origin main

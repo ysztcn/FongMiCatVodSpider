@@ -1,0 +1,33 @@
+name: Sync Upstream
+on:
+  schedule:
+    - cron: "0 0 * * *"  # 每日同步
+    workflow_dispatch:  # 允许手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 关键权限！
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Git 用户信息
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: 添加上游仓库
+        run: |
+          git remote add upstream https://github.com/FongMi/CatVodSpider.git
+          git fetch upstream
+
+      - name: 合并上游分支
+        run: |
+          git checkout main
+          git pull upstream main --no-edit  # 自动接受合并提交信息
+
+      - name: 推送更改到 origin
+        run: |
+          git push origin main

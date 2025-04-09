@@ -7,7 +7,7 @@
 -dontwarn android.content.res.**
 
 # slf4j
--keep class org.slf4j.ILoggerFactory { *; }
+-keep class org.slf4j.** { *; }
 
 # AndroidX
 -keep class androidx.core.** { *; }
@@ -27,6 +27,12 @@
 
 # Sardine
 -keep class com.thegrizzlylabs.sardineandroid.** { *; }
+
+# SMBJ
+-keep class com.hierynomus.** { *; }
+-keep class net.engio.mbassy.** { *; }
+-dontwarn org.ietf.jgss.**
+-dontwarn javax.**
 
 # Logger
 -keep class com.orhanobut.logger.** { *; }
